@@ -21,6 +21,8 @@ exports.addLostObj=function(req,res,next){
 	console.log('POST/LostFound');
 	var itemlost = new itemLost({
 
+		lat: req.body.lat,
+		lng: req.body.lng,
 		place: req.body.place,
 		date: req.body.date,
 		type: req.body.type,
@@ -39,23 +41,12 @@ exports.addLostObj=function(req,res,next){
 exports.getLostByFilter=function(req, res, next){
 	console.log('GET/ObjLost/:filter');	
 	console.log(req.params.filter);
-	itemLost.find({ $or: [ { place: req.params.filter },{ date: req.params.filter },{ type: req.params.filter },
-		{ contact: req.params.filter },{ description: req.params.filter } ] } ,
-		function(err,ObjLostTable){
-  		if(err){
-  			res.send(500, err.message);
-  		}else{
-  			console.log('GET/ObjLost');
-        	res.status(200).send(ObjLostTable);
-  		}
-  	});
-};
-
-
-exports.getLostById=function(req, res, next){
-	console.log('GET/ObjLost/:id');	
-	console.log(req.params.id);
-	itemLost.find({ _id: req.params.id },function(err,ObjLostTable){
+	var filterInt = req.param.filter; 
+	console.log('filter int ='+ filterInt);	
+	itemLost.find({ $or: [		 
+		{ place: req.params.filter },{ date: req.params.filter },{ type: req.params.filter },
+		{ contact: req.params.filter },{ description: req.params.filter } 
+		]},function(err,ObjLostTable){
   		if(err){
   			res.send(500, err.message);
   		}else{
@@ -67,9 +58,9 @@ exports.getLostById=function(req, res, next){
 
 
 exports.deleteLostObj=function(req, res, next){
-	console.log('DELETE/ObjLost/:id');
-	console.log(req.params.id);
-	itemLost.remove({_id: req.params.id},function(err,ObjLostTable){
+	console.log('DELETE/ObjLost/:filter');
+	console.log(req.params.filter);
+	itemLost.remove({_id: req.params.filter},function(err,ObjLostTable){
   		if(err){
   			res.send(500, err.message);
   		}else{
@@ -81,17 +72,19 @@ exports.deleteLostObj=function(req, res, next){
 
 
 exports.updateLostObj=function(req, res, next){
-	console.log('PUT/ObjLost/:id');
-	console.log(req.params.id);
+	console.log('PUT/ObjLost/:filter');
+	console.log(req.params.filter);
 	console.log(req.body);
-	itemLost.update({_id: req.params.id},
-				{$set:{	place:req.body.place, date:req.body.date, type:req.body.type, contact:req.body.contact,
-				description:req.body.description, reward:req.body.reward}},
+	itemLost.update({_id: req.params.filter},
+				{$set:{	
+					lat:req.body.lat, lng:req.body.lng, place:req.body.place, date:req.body.date, 
+					type:req.body.type, contact:req.body.contact, description:req.body.description, 
+					reward:req.body.reward}},
 				function(err,ObjLostTable){
 		if(err){
 			res.send(500,err.message);
 		}else{
-			itemLost.find({_id: req.params.id},function(err,ObjLostTable){
+			itemLost.find({_id: req.params.filter},function(err,ObjLostTable){
 	  			if(err){
 		  			res.send(500, err.message);
 		  		}else{
