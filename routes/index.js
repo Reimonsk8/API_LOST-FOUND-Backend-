@@ -21,9 +21,6 @@ router.route('/ObjLost')
 
 router.route('/ObjLost/:filter')
 	.get(ObjLostCtrl.getLostByFilter)
-
-router.route('/ObjLost/:id')
-	.get(ObjLostCtrl.getLostById)
 	.delete(ObjLostCtrl.deleteLostObj)
 	.put(upload.array(),ObjLostCtrl.updateLostObj);
 
@@ -35,9 +32,6 @@ router.route('/ObjFound')
 
 router.route('/ObjFound/:filter')
 	.get(ObjFoundCtrl.getFoundByFilter)
-
-router.route('/ObjFound/:id')
-	.get(ObjFoundCtrl.getFoundById)
 	.delete(ObjFoundCtrl.deleteFoundObj)
 	.put(upload.array(),ObjFoundCtrl.updateFoundObj);
 
