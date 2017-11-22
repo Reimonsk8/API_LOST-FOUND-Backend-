@@ -5,7 +5,7 @@ var ObjFoundTable = [];
 
 exports.getFoundObjs = function(req,res,next){
 	console.log('GET /ObjFound');
-	itemFound.find(function(err,ObjFoundTable){
+	itemFound.find(req.body,function(err,ObjFoundTable){
 		if(err){
 			res.send(500, err.message);
 		}
