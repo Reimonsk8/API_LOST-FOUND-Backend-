@@ -1,7 +1,7 @@
 # API_LOST-FOUND-Backend-
 API LOST&amp;FOUND (Backend) proyecto de sistemas distribuidos
 
-Pasos para ejecutar el programa
+Pasos para ejecutar el programa:
 
 1-clonar git
 
