@@ -5,12 +5,14 @@ var ObjLostTable = [];
 
 exports.getLostObjs = function(req,res,next){
 	console.log('GET /ObjLost');
-	itemLost.find(function(err,ObjLostTable){
+	console.log(req.param.filter);
+	console.log(req.query);
+	itemLost.find(req.query,function(err,ObjLostTable){
 		if(err){
 			res.send(500, err.message);
 		}
 		else{
-			console.log('GET /ObjLost');
+			console.log('GET /ObjLost funciono?');
 			res.status(200).jsonp(ObjLostTable);	
 		}
 	});
@@ -39,10 +41,7 @@ exports.addLostObj=function(req,res,next){
 
 
 exports.getLostByFilter=function(req, res, next){
-	console.log('GET/ObjLost/:filter');	
-	console.log(req.params.filter);
-	var filterInt = req.param.filter; 
-	console.log('filter int ='+ filterInt);	
+	console.log('GET/ObjLost/:filter');
 	itemLost.find({ $or: [		 
 		{ place: req.params.filter },{ date: req.params.filter },{ type: req.params.filter },
 		{ contact: req.params.filter },{ description: req.params.filter } 
